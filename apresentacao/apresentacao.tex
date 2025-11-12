@@ -1,0 +1,140 @@
+
+%-------------------------------------------------%
+% 2025-04-01 - Emerson Ribeiro de Mello - mello@ifsc.edu.br
+%-------------------------------------------------%
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage[english,brazil]{babel}
+\usepackage[style=abnt,noslsn,justify]{biblatex}
+\renewcommand*{\bibfont}{\small}
+\usepackage{csquotes}
+\addbibresource{referencias_trabalho.bib}
+
+\definecolor[named]{novaCor}{HTML}{303A52}
+\definecolor{verdeescuro}{RGB}{0,112,19}
+
+\usetheme{ifsclean}
+
+% -------------------------------------------------%
+%              Título 
+% -------------------------------------------------%
+\title{OWASP WebGoat e WebWolf}
+\subtitle{Laboratório de Segurança em Aplicações Web}
+\author{
+  Giuliano Marcus Bianco \\[3pt]
+  Luis Renato Freitas de Almeida \\[3pt]
+  Nicolas Arthur Raulino Oliveira
+}
+\institute{Instituto Federal de Santa Catarina}
+\date{Novembro de 2025}
+
+% -------------------------------------------------%
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% -------------------------------------------------%
+\section{Introdução}
+
+\begin{frame}{Contextualização}
+    \begin{itemize}
+        \item O crescimento das aplicações web trouxe novos desafios de segurança.
+        \item A OWASP promove boas práticas e ferramentas para mitigar vulnerabilidades.
+        \item WebGoat e WebWolf são plataformas didáticas para aprendizado prático de segurança.
+    \end{itemize}
+\end{frame}
+
+% -------------------------------------------------%
+\section{A OWASP}
+
+\begin{frame}{O que é a OWASP}
+    \begin{itemize}
+        \item Comunidade global dedicada à segurança de software.
+        \item Produz guias, ferramentas e projetos abertos, como o \textbf{OWASP Top 10}.
+        \item O objetivo é ajudar desenvolvedores a criar aplicações mais seguras.
+    \end{itemize}
+\end{frame}
+
+% -------------------------------------------------%
+\section{OWASP WebGoat}
+
+\begin{frame}{O que é o WebGoat}
+    \begin{itemize}
+        \item Aplicação web vulnerável criada intencionalmente.
+        \item Desenvolvida em Java e executada no servidor Apache Tomcat.
+        \item Usada para ensinar como explorar e corrigir falhas de segurança.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Exemplos de vulnerabilidades abordadas}
+    \begin{itemize}
+        \item Injeção de SQL (\textit{SQL Injection});
+        \item Quebra de autenticação e controle de sessão;
+        \item Cross-Site Scripting (XSS);
+        \item Exposição de dados sensíveis;
+        \item Controle de acesso incorreto.
+    \end{itemize}
+\end{frame}
+
+% -------------------------------------------------%
+\section{OWASP WebWolf}
+
+\begin{frame}{O que é o WebWolf}
+    \begin{itemize}
+        \item Ferramenta complementar ao WebGoat.
+        \item Simula o ambiente de um atacante externo.
+        \item Permite receber e-mails falsos, capturar dados e testar exploits.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Integração com o WebGoat}
+    \begin{itemize}
+        \item WebGoat envia dados ao WebWolf durante atividades práticas.
+        \item Juntos, simulam cenários reais de ataque e defesa.
+        \item Ideal para treinamento ético em segurança web.
+    \end{itemize}
+\end{frame}
+
+% -------------------------------------------------%
+\section{Demonstração}
+
+\begin{frame}{Ambiente de Teste}
+    \begin{itemize}
+        \item Instalação via Docker Compose com dois containers: \texttt{webgoat} e \texttt{webwolf}.
+        \item Endereços padrão:
+              \begin{itemize}
+                  \item WebGoat: \texttt{http://localhost:8080/WebGoat}
+                  \item WebWolf: \texttt{http://localhost:9090/WebWolf}
+              \end{itemize}
+        \item Aulas interativas e relatórios automáticos.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Exemplo de Exercício}
+    \begin{itemize}
+        \item Exploração de um formulário vulnerável (ex: login).
+        \item Observação dos logs e e-mails capturados no WebWolf.
+        \item Discussão sobre a mitigação da falha.
+    \end{itemize}
+\end{frame}
+
+% -------------------------------------------------%
+\section{Conclusão}
+
+\begin{frame}{Considerações Finais}
+    \begin{itemize}
+        \item WebGoat e WebWolf permitem aprendizado prático e seguro de vulnerabilidades.
+        \item Ajudam a compreender como proteger aplicações contra ataques reais.
+        \item São ferramentas essenciais para o ensino de segurança da informação.
+    \end{itemize}
+\end{frame}
+
+% -------------------------------------------------%
+\begin{frame}[allowframebreaks]{Referências}
+    \nocite{*}
+    \printbibliography
+\end{frame}
+
+\end{document}
