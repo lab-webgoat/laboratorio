@@ -31,13 +31,30 @@
 % -------------------------------------------------%
 \begin{document}
 
-\begin{frame}
-    \titlepage
+\begin{frame}[plain, noframenumbering]
+    \maketitle
+\end{frame}
+
+\begin{frame}[plain, noframenumbering]{Licenciamento}
+    \licenciamentoLivre
+\end{frame}
+% -------------------------------------------------%
+\begin{frame}[plain, noframenumbering]{Sumário}
+    \tableofcontents
 \end{frame}
 
 % -------------------------------------------------%
 \section{Introdução}
-
+% -------------------------------------------------%
+\begin{frame}{Objetivos desse seminário}
+    \begin{itemize}
+        \item Testar vulnerabilidades comumente encontrado em aplicações baseadas em Java.
+        \item Demonstrar e explicar vulnerabilidades de forma prática a partir das aplicações OWASP WebGoat e OWASP WebWolf.
+        \item Identificar os principais métodos de ataques.
+        \item Identificar boas práticas de segurança do desenvolvimento de aplicações.
+    \end{itemize}
+\end{frame}
+% -------------------------------------------------%
 \begin{frame}{Contextualização}
     \begin{itemize}
         \item O crescimento das aplicações web trouxe novos desafios de segurança.
@@ -45,28 +62,42 @@
         \item WebGoat e WebWolf são plataformas didáticas para aprendizado prático de segurança.
     \end{itemize}
 \end{frame}
-
+	
 % -------------------------------------------------%
 \section{A OWASP}
 
 \begin{frame}{O que é a OWASP}
+  \begin{figure}
+    \begin{center}
+      \includegraphics[width=.35\linewidth]{img/OWASP-LOGO.png}
+    \end{center}
+  \end{figure}
+  OWASP é o acrônimo em inglês para "Open Web Application Security Project", é uma comunidade aberta, dedicada a habilitar as organizações a desenvolver, comprar e manter aplicações e APIs que podem ser confiáveis.
+
+\end{frame}
+
+% -------------------------------------------------%
+
+\begin{frame}{O que é a OWASP}
+  
     \begin{itemize}
         \item Comunidade global dedicada à segurança de software.
         \item Produz guias, ferramentas e projetos abertos, como o \textbf{OWASP Top 10}.
         \item O objetivo é ajudar desenvolvedores a criar aplicações mais seguras.
     \end{itemize}
 \end{frame}
-
 % -------------------------------------------------%
+
 \section{OWASP WebGoat}
 
 \begin{frame}{O que é o WebGoat}
     \begin{itemize}
-        \item Aplicação web vulnerável criada intencionalmente.
-        \item Desenvolvida em Java e executada no servidor Apache Tomcat.
+        \item É uma aplicação web deliberadamente insegura, concebida para ensinar/aprender sobre segurança de aplicações web.
+        \item Desenvolvida e mantida pela OWASP para aprender e praticar conceitos de segurança web das 10 principais vulnerabilidades da OWASP.
         \item Usada para ensinar como explorar e corrigir falhas de segurança.
     \end{itemize}
 \end{frame}
+
 
 \begin{frame}{Exemplos de vulnerabilidades abordadas}
     \begin{itemize}
@@ -75,6 +106,15 @@
         \item Cross-Site Scripting (XSS);
         \item Exposição de dados sensíveis;
         \item Controle de acesso incorreto.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Requisitos}
+    \begin{itemize}
+        \item \Myhref{https://hub.docker.com/r/webgoat/webgoat}{WebGoat} [1] é uma aplicação web J2EE que funciona como uma aplicação web no servidor web Apache Tomcat em segundo plano.
+        \item Um proxy como OWASP ZAP, Burpsuite etc.
+        \item WebWolf é outro aplicativo web que depende do WebGoat e requer que o WebGoat seja iniciado primeiro (hospedagem de um arquivo, recebimento de e-mail, página de destino para solicitações recebidas).
+        
     \end{itemize}
 \end{frame}
 
