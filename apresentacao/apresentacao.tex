@@ -22,7 +22,7 @@
 \subtitle{Seminário de Segurança da Informação}
 \author{
   Giuliano Marcus Bianco \\[3pt]
-  Luis Renato Freitas de Almeida \\[3pt]
+  Luís Renato Freitas de Almeida \\[3pt]
   Nicolas Arthur Raulino Oliveira
 }
 \institute{Instituto Federal de Santa Catarina}
@@ -168,7 +168,7 @@
         \item \textbf{Rede isolada} (\texttt{zapnet}) conectando todos os containers.
         \item \textbf{WebGoat}: aplicação vulnerável na porta \texttt{8080}.
         \item \textbf{WebWolf}: incluído na imagem WebGoat, disponível na porta \texttt{9090} (acessível via localhost).
-        \item \textbf{OWASP ZAP}: proxy para interceptar e analisar requisições HTTP.
+        \item \textbf{OWASP ZAP}: proxy que atua como \textit{Man-in-the-Middle} (MITM), posicionando-se entre o navegador e o servidor para interceptar e analisar requisições HTTP/HTTPS.
         \item \textbf{Volumes persistentes} para manter dados entre execuções. (caso alguém queira usar o container para praticar em casa)
     \end{itemize}
 \end{frame}
