@@ -85,7 +85,7 @@ http://webgoat:8080/WebGoat\end{lstlisting}
 O navegador integrado do ZAP já está configurado para interceptar automaticamente todo o tráfego HTTP/HTTPS, permitindo analisar as requisições e respostas enviadas pelo WebGoat.
 
 \begin{important}
-    Use \texttt{webgoat:8080} ao invés de \texttt{localhost:8080} no navegador integrado do ZAP, pois as aplicações estão na mesma rede interna e se comunicam pelo nome do serviço.
+    Use \texttt{webgoat:8080} ao invés de \texttt{localhost:8080} no navegador integrado do ZAP, pois as aplicações estão na mesma rede \texttt{zapnet} que foi definida no arquivo \texttt{docker-compose.yml}.
 \end{important}
 
 \subsection{Acessando o WebWolf}
