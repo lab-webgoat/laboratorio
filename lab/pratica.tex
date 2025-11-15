@@ -1,0 +1,108 @@
+% ------------------------------------------------------------%
+% 2025-11-12
+% 2025 - Emerson Ribeiro de Mello - mello@ifsc.edu.br
+% ------------------------------------------------------------%
+
+%---------------------------------------------------------%
+% ATENÇÃO: O pacote ifscutils é necessário para essa classe
+% Para evitar dependências de soluções externas para localizar
+% tal arquivo, deve-se incluir a linha abaixo dentro do arquivo
+% .tex, já apontando para o caminho relativo do arquivo ifscutils.sty
+% \RequirePackage{ifscutils}
+%---------------------------------------------------------%
+
+\documentclass[11pt]{ifscarticle}
+\RequirePackage{./ifscutils}
+
+\usepackage{xargs}
+\usepackage{listings}
+
+\begin{document}
+
+\cabecalhoCurso{Análise e Desenvolvimento de Sistemas}{Segurança da Informação}{Prof. Emerson Ribeiro de Mello}{\url{mello@ifsc.edu.br}}{\textbf{Prática:} OWASP WebGoat e WebWolf}{18/11/2025}
+
+\noindent\textbf{Integrantes:}\newline
+Giuliano Marcus Bianco\newline
+Luís Renato Freitas de Almeida\newline
+Nicolas Arthur Raulino Oliveira
+
+\vspace{0.5cm}
+
+\section{Objetivos}
+
+\begin{itemize}
+    \item Configurar e iniciar o ambiente da prática usando Docker Compose
+    \item Acessar as aplicações WebGoat e WebWolf
+    \item Usar o OWASP ZAP para interceptar e analisar requisições HTTP
+    \item Atacar algumas vulnerabilidades do WebGoat
+\end{itemize}
+
+
+\section{Configuração do Ambiente}
+
+O ambiente de laboratório é composto por três aplicações principais:
+
+\begin{itemize}
+    \item \textbf{WebGoat}: Aplicação web deliberadamente insegura que contém vulnerabilidades comumente encontradas em aplicações Java. É utilizada para aprender e praticar técnicas de segurança web através de exercícios práticos.
+    \item \textbf{WebWolf}: Aplicação complementar que simula o ambiente do atacante. Permite receber e-mails, hospedar arquivos e capturar requisições enviadas pelo WebGoat durante os exercícios.
+    \item \textbf{OWASP ZAP}: Proxy de segurança para interceptar e analisar requisições HTTP/HTTPS, permitindo identificar vulnerabilidades e testar ataques.
+\end{itemize}
+
+\subsection{Arquivo docker-compose.yml}
+
+O arquivo de configuração do Docker Compose é apresentado no \autoref{docker-compose}.
+
+\lstinputlisting[style=yaml,caption={Configuração do Docker Compose},label={docker-compose}]{../docker-compose.yml}
+
+\section{Iniciando o Ambiente}
+
+\subsection{Iniciar as aplicações}
+
+Para iniciar o WebGoat, WebWolf e OWASP ZAP, execute o comando abaixo:
+
+\begin{lstlisting}[style=shell]
+docker-compose up --build -d
+\end{lstlisting}
+
+\section{Acessando as Aplicações}
+
+\subsection{Acessando o OWASP ZAP}
+
+O OWASP ZAP possui interface gráfica que será exibida automaticamente após a inicialização. O ZAP atua como um \textit{Man-in-the-Middle} (MITM), posicionando-se entre o navegador e o servidor web para interceptar, analisar e modificar o tráfego HTTP/HTTPS. A interface permite visualizar todas as requisições e respostas capturadas.
+
+\subsection{Acessando o WebGoat}
+
+O WebGoat é a aplicação principal desta prática. Ela contém diversas vulnerabilidades comumente encontradas em aplicações Java. Para acessar o WebGoat:
+
+\begin{enumerate}
+    \item Abra a interface gráfica do OWASP ZAP
+    \item Use o navegador integrado do ZAP (disponível na interface)
+    \item No navegador integrado, acesse:
+    \begin{lstlisting}[style=shell]
+http://webgoat:8080/WebGoat\end{lstlisting}
+\end{enumerate}
+
+O navegador integrado do ZAP já está configurado para interceptar automaticamente todo o tráfego HTTP/HTTPS, permitindo analisar as requisições e respostas enviadas pelo WebGoat.
+
+\begin{important}
+    Use \texttt{webgoat:8080} ao invés de \texttt{localhost:8080} no navegador integrado do ZAP, pois as aplicações estão na mesma rede interna e se comunicam pelo nome do serviço.
+\end{important}
+
+\subsection{Acessando o WebWolf}
+
+O WebWolf simula o ambiente do atacante e é utilizado durante os exercícios para receber dados enviados pelo WebGoat. Diferente do WebGoat, o WebWolf deve ser acessado através do navegador na sua máquina local:
+
+\begin{enumerate}
+    \item Abra seu navegador web
+    \item Acesse:
+    \begin{lstlisting}[style=shell]
+http://localhost:9090/WebWolf
+\end{lstlisting}
+\end{enumerate}
+
+O WebWolf permite visualizar e-mails recebidos, arquivos hospedados e requisições capturadas durante os exercícios práticos do WebGoat.
+
+\vspace*{\fill}
+\licenciamentoLivre
+
+\end{document}
