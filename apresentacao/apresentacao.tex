@@ -164,21 +164,12 @@
 
 \begin{frame}{Ambiente de Teste}
     \begin{itemize}
-        \item Instalação via Docker Compose com dois containers: \texttt{webgoat} e \texttt{webwolf}.
-        \item Endereços padrão:
-              \begin{itemize}
-                  \item WebGoat: \texttt{http://localhost:8080/WebGoat}
-                  \item WebWolf: \texttt{http://localhost:9090/WebWolf}
-              \end{itemize}
-        \item Aulas interativas e relatórios automáticos.
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Exemplo de Exercício}
-    \begin{itemize}
-        \item Exploração de um formulário vulnerável (ex: login).
-        \item Observação dos logs e e-mails capturados no WebWolf.
-        \item Discussão sobre a mitigação da falha.
+        \item Ambiente containerizado usando \textbf{Docker Compose} para facilitar a configuração e execução.
+        \item \textbf{Rede isolada} (\texttt{zapnet}) conectando todos os containers.
+        \item \textbf{WebGoat}: aplicação vulnerável na porta \texttt{8080}.
+        \item \textbf{WebWolf}: incluído na imagem WebGoat, disponível na porta \texttt{9090} (acessível via localhost).
+        \item \textbf{OWASP ZAP}: proxy para interceptar e analisar requisições HTTP.
+        \item \textbf{Volumes persistentes} para manter dados entre execuções. (caso alguém queira usar o container para praticar em casa)
     \end{itemize}
 \end{frame}
 
