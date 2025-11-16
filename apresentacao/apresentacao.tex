@@ -181,6 +181,45 @@
   \end{figure}
 \end{frame}
 
+\begin{frame}{Vulnerabilidades JWT: Contexto}
+    \begin{itemize}
+        \item \textbf{JSON Web Token (JWT)}: padrão para autenticação e autorização em aplicações web modernas.
+        \item Estrutura: \texttt{header.payload.signature}
+        \item Tokens são assinados digitalmente para garantir integridade e autenticidade.
+        \item Vulnerabilidades comuns surgem de:
+        \begin{itemize}
+            \item Falta de validação adequada da assinatura
+            \item Algoritmos de assinatura fracos ou mal implementados
+            \item Manipulação do payload sem verificação
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Ataques que Demonstraremos}
+    \begin{enumerate}
+        \item \textbf{Decodificação de JWT}
+        \begin{itemize}
+            \item Análise da estrutura do token
+            \item Extração de informações sensíveis do payload
+            \item Risco: exposição de dados em tokens não criptografados
+        \end{itemize}
+        \item \textbf{Manipulação de JWT}
+        \begin{itemize}
+            \item Alteração do payload para elevar privilégios
+            \item Exploração de validação inadequada de assinatura
+            \item Objetivo: tornar-se administrador e executar ações privilegiadas
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Mitigações para essas vulnerabilidades do JWT}
+    \begin{itemize}
+        \item \textbf{Decodificação}: não colocar dados sensíveis no payload (ou usar JWE para criptografar)
+        \item \textbf{Manipulação}: sempre validar a assinatura e rejeitar tokens com algoritmos "none"
+
+    \end{itemize}
+\end{frame}
+
 
 % -------------------------------------------------%
 \section{Conclusão}

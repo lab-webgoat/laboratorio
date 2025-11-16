@@ -117,12 +117,50 @@ http://webgoat:9090/WebWolf
 \end{lstlisting}
 \end{enumerate}
 
-\subsection{Exemplo de Requisição com ZAP e WebGoat}
+\section{Vulnerabilidades em JSON Web Tokens (JWT)}
 
-O primeiro exemplo que vamos ver é sobre Injeção de SQL em forma de personificação, que é um ataque com intenção de fingir ser o sistema real com a injeção de código que tem como alvo bancos de dados.
+JWT é um padrão usado para autenticação em aplicações web. Estrutura: header.payload.signature, onde cada parte é codificada em base64.
+
+\subsection{Exercício 1: Decodificando um JWT}
+
+JWTs são apenas codificados em base64, não criptografados. Qualquer pessoa pode decodificar e visualizar o conteúdo.
 
 \begin{enumerate}
-    \item Dentro do WebGoat, vamos acessar \texttt{"(A3) Injection" > "SQL Injection (intro)" > Página 2}.
+    \item Acesse: \texttt{(A7) Identity \& Auth Failure > JWT tokens > Exercício 4}
+    \item Copie o token JWT fornecido
+    \item Acesse o WebWolf: \texttt{http://localhost:9090/WebWolf}
+    \item Na aba \texttt{"JWT"}, cole o token e clique em \texttt{"Encoded"}
+    \item No payload decodificado, localize o campo \texttt{"user\_name": "user"}
+    \item Volte ao WebGoat e insira o username encontrado.
+\end{enumerate}
+
+\subsection{Exercício 2: Manipulação de JWT - Tornando-se Admin}
+
+Se a aplicação aceita tokens com algoritmo "none" (sem assinatura), é possível modificar o payload para elevar privilégios.
+
+\begin{enumerate}
+    \item Acesse: \texttt{(A7) Identity \& Auth Failure > JWT tokens > Exercício 6}
+    \item No ZAP History, localize requisições para \texttt{/WebGoat/JWT/} e copie o token JWT do header \texttt{Authorization}
+    \item No WebWolf (aba JWT), decodifique o token
+    \item Modifique o header para: 
+    \begin{lstlisting}[style=json]
+{ "alg": "none" }
+\end{lstlisting}
+
+    \item Modifique o payload para:
+    \begin{lstlisting}[style=json]
+{ "admin": "true"}
+\end{lstlisting}
+    \item Gere o novo token (sem assinatura)
+    \item No ZAP Requester, substitua o token no header e envie
+\end{enumerate}
+
+\section{Injeção SQL}
+
+Injeção SQL é um ataque que explora vulnerabilidades em aplicações que interagem com bancos de dados, permitindo que um atacante execute comandos SQL não autorizados.
+
+\begin{enumerate}
+    \item Dentro do WebGoat, vamos acessar \texttt{(A3) Injection > SQL Injection (intro) > Página 2}.
     \item Em \texttt{"SQL Query"}, vamos colocar o código abaixo:
     \begin{lstlisting}[style=sql]
 SELECT department FROM employees WHERE userid=96134;
@@ -145,7 +183,6 @@ SELECT department FROM employees WHERE userid=96134;
 }
 \end{lstlisting}
 \end{enumerate}
-
 
 % ------------------------------------------------------------------------------------------------------------------------------------------
 \vspace*{\fill}
