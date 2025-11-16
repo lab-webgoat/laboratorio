@@ -7,8 +7,6 @@ services:
     networks: [zapnet]
     ports:
       - "127.0.0.1:9090:9090"
-    environment:
-      TZ: America/Sao_Paulo
     volumes:
       - webgoat_data:/home/webgoat/.webgoat-2025.3
 
@@ -19,7 +17,6 @@ services:
     restart: unless-stopped
     networks: [zapnet]
     environment:
-      TZ: America/Sao_Paulo
       DISPLAY: ${DISPLAY} 
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
