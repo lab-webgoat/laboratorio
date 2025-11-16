@@ -102,6 +102,52 @@ http://localhost:9090/WebWolf
 
 O WebWolf permite visualizar e-mails recebidos, arquivos hospedados e requisições capturadas durante os exercícios práticos do WebGoat.
 
+\subsection{Iniciando com o WebGoat}
+
+Na página de Login do WebGoat em http://webgoat:8080/WebGoat no navegador do Zap, devemos seguir estes passos:
+
+\begin{enumerate}
+    \item Criar uma conta clicando em \texttt{"or register yourself as a new user"}
+    \item Preencha as informações com dados fictícios para criação de um usuário. (Exemplo: Username: \texttt{"fulano"} Senha: \texttt{"123456"})
+    \item Clique em \texttt{"Sign up"}
+    \item Dentro do ZAP, podemos encontrar em texto claro o usuário e a senha que criamos dentro dos pacotes no histórico de requisições.
+
+    \begin{lstlisting}[style=shell]
+http://localhost:9090/WebWolf
+\end{lstlisting}
+\end{enumerate}
+
+\subsection{Exemplo de Requisição com ZAP e WebGoat}
+
+O primeiro exemplo que vamos ver é sobre Injeção de SQL em forma de personificação, que é um ataque com intenção de fingir ser o sistema real com a injeção de código que tem como alvo bancos de dados.
+
+\begin{enumerate}
+    \item Dentro do WebGoat, vamos acessar \texttt{"(A3) Injection" > "SQL Injection (intro)" > Página 2}.
+    \item Em \texttt{"SQL Query"}, vamos colocar o código abaixo:
+    \begin{lstlisting}[style=sql]
+SELECT department FROM employees WHERE userid=96134;
+\end{lstlisting}
+    \item Clicar em \texttt{"Submit"}.
+    \item Acessar o ZAP e procurar por uma requisição de método POST com Tags JSON e verificar se contém a nossa Query SQL.
+    \item Após identificamos, podemos clicar em \texttt{"Requester"} na parte superior direita do ZAP e selecionar o Method POST.
+    \item Vamos colocar os mesmos dados do cabeçalho que o pacote com a query SQL que enviamos anteriormente pelo WebGoat.
+    \item Podemos clicar em \texttt{"Send"} e ver a resposta que o sistema nos fornece. 
+    \item Se estiver correto, podemos esperar uma resposta assim:
+    \begin{lstlisting}[style=json]
+{
+  "lessonCompleted" : true,
+  "feedback" : "You have succeeded!",
+  "feedbackArgs" : null,
+  "output" : "<span class='feedback-positive'>select department from employees where userid=96134<\\/span><table><tr><th>DEPARTMENT<\\/th><\\/tr><tr><td>Marketing<\\/td><\\/tr><\\/table>",
+  "outputArgs" : null,
+  "assignment" : "SqlInjectionLesson2",
+  "attemptWasMade" : true
+}
+\end{lstlisting}
+\end{enumerate}
+
+
+% ------------------------------------------------------------------------------------------------------------------------------------------
 \vspace*{\fill}
 \licenciamentoLivre
 

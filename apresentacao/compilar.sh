@@ -4,7 +4,7 @@
 cd "$(dirname "$0")"
 
 # Nome do arquivo principal (sem extensão .tex)
-ARQUIVO="demo"
+ARQUIVO="apresentacao"
 
 echo "Compilando apresentação LaTeX..."
 
