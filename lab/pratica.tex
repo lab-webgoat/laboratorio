@@ -76,7 +76,7 @@ docker compose up --build -d
 
 \subsection{Acessando o OWASP ZAP}
 
-O OWASP ZAP possui interface gráfica que será exibida automaticamente após a inicialização. O ZAP atua como um \textit{Man-in-the-Middle} (MITM), posicionando-se entre o navegador e o servidor web para interceptar, analisar e modificar o tráfego HTTP/HTTPS. A interface permite visualizar todas as requisições e respostas capturadas.
+O OWASP ZAP possui interface gráfica que será exibida automaticamente após a inicialização. O ZAP vai atuar como um \textit{Man-in-the-Middle} (MITM), posicionando-se entre o navegador e o servidor web para interceptar, analisar e modificar o tráfego HTTP/HTTPS. A interface permite visualizar todas as requisições e respostas capturadas.
 
 \subsection{Acessando o WebGoat}
 
@@ -90,12 +90,25 @@ O WebGoat é a aplicação principal desta prática. Ela contém diversas vulner
 http://webgoat:8080/WebGoat
 \end{lstlisting}
 \end{enumerate}
-
 O navegador integrado do ZAP já está configurado para interceptar automaticamente todo o tráfego HTTP/HTTPS, permitindo analisar as requisições e respostas enviadas pelo WebGoat.
 
 \begin{important}
     Use \texttt{webgoat:8080} ao invés de \texttt{localhost:8080} no navegador integrado do ZAP, pois as aplicações estão na mesma rede \texttt{zapnet} que foi definida no arquivo \texttt{docker-compose.yml}.
-\end{important}
+\end{important}    
+
+\subsection{Criando sua conta}
+
+Na página de Login do WebGoat em http://webgoat:8080/WebGoat, devemos seguir estes passos:
+
+\begin{enumerate}
+    \item Criar uma conta clicando em \texttt{"or register yourself as a new user"}
+    \item Preencha as informações com dados fictícios para criação de um usuário. (Exemplo: Username: \texttt{"fulano"} Senha: \texttt{"123456"}). E guarde essas credenciais 
+    \item Clique em \texttt{"Sign up"}
+    \item Dentro do ZAP, podemos encontrar o usuário e a senha em texto claro que criamos dentro dos pacotes no histórico de requisições.
+\begin{lstlisting}[style=shell]
+http://webgoat:8080/WebGoat
+\end{lstlisting}
+\end{enumerate}
 
 \subsection{Acessando o WebWolf}
 
@@ -105,29 +118,12 @@ O WebWolf simula o ambiente do atacante e é utilizado durante os exercícios pa
     \item Abra seu navegador web
     \item Acesse:
 \begin{lstlisting}[style=shell]
-http://localhost:9090/WebWolf
+http://localhost:9090/WebWolf    
 \end{lstlisting}
 \end{enumerate}
-
 O WebWolf permite visualizar e-mails recebidos, arquivos hospedados e requisições capturadas durante os exercícios práticos do WebGoat.
 
-\subsection{Iniciando com o WebGoat}
-
-Na página de Login do WebGoat em http://webgoat:8080/WebGoat no navegador do Zap, devemos seguir estes passos:
-
-\begin{enumerate}
-    \item Criar uma conta clicando em \texttt{"or register yourself as a new user"}
-    \item Preencha as informações com dados fictícios para criação de um usuário. (Exemplo: Username: \texttt{"fulano"} Senha: \texttt{"123456"})
-    \item Clique em \texttt{"Sign up"}
-    \item Dentro do ZAP, podemos encontrar o usuário e a senha em texto claro que criamos dentro dos pacotes no histórico de requisições.
-\begin{lstlisting}[style=shell]
-http://webgoat:9090/WebWolf
-\end{lstlisting}
-\end{enumerate}
-
 % -----------------------JWT--------------------------%
-
-
 \section{Vulnerabilidades em JSON Web Tokens (JWT)}
 
 JWT é um padrão usado para autenticação em aplicações web. Estrutura: header.payload.signature, onde cada parte é codificada em base64.
