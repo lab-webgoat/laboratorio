@@ -56,12 +56,20 @@ O arquivo de configuração do Docker Compose é apresentado no \autoref{docker-
 
 \section{Iniciando o Ambiente}
 
+\subsection{Configurar acesso à interface gráfica}
+
+Antes de iniciar os containers, é necessário permitir que o container do OWASP ZAP acesse o servidor X11 da sua máquina para exibir a interface gráfica. Execute o comando:
+
+\begin{lstlisting}[style=shell]
+xhost +
+\end{lstlisting}
+
 \subsection{Iniciar as aplicações}
 
 Para iniciar o WebGoat, WebWolf e OWASP ZAP, execute o comando abaixo:
 
 \begin{lstlisting}[style=shell]
-docker-compose up --build -d
+docker compose up --build -d
 \end{lstlisting}
 
 \section{Acessando as Aplicações}
