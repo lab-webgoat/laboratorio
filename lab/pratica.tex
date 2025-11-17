@@ -1,6 +1,6 @@
 % ------------------------------------------------------------%
 % 2025-11-12
-% 2025 - Emerson Ribeiro de Mello - mello@ifsc.edu.br
+% 2025 - Emerson Ribeiro de Mello - [mello@ifsc.edu.br](mailto:mello@ifsc.edu.br)
 % ------------------------------------------------------------%
 
 %---------------------------------------------------------%
@@ -10,6 +10,7 @@
 % .tex, já apontando para o caminho relativo do arquivo ifscutils.sty
 % \RequirePackage{ifscutils}
 %---------------------------------------------------------%
+
 
 \documentclass[11pt]{ifscarticle}
 \RequirePackage{./ifscutils}
@@ -36,7 +37,6 @@ Nicolas Arthur Raulino Oliveira
     \item Usar o OWASP ZAP para interceptar e analisar requisições HTTP
     \item Atacar algumas vulnerabilidades do WebGoat
 \end{itemize}
-
 
 \section{Configuração do Ambiente}
 
@@ -78,8 +78,9 @@ O WebGoat é a aplicação principal desta prática. Ela contém diversas vulner
     \item Abra a interface gráfica do OWASP ZAP
     \item Use o navegador integrado do ZAP (disponível na interface)
     \item No navegador integrado, acesse:
-    \begin{lstlisting}[style=shell]
-http://webgoat:8080/WebGoat\end{lstlisting}
+\begin{lstlisting}[style=shell]
+http://webgoat:8080/WebGoat
+\end{lstlisting}
 \end{enumerate}
 
 O navegador integrado do ZAP já está configurado para interceptar automaticamente todo o tráfego HTTP/HTTPS, permitindo analisar as requisições e respostas enviadas pelo WebGoat.
@@ -95,7 +96,7 @@ O WebWolf simula o ambiente do atacante e é utilizado durante os exercícios pa
 \begin{enumerate}
     \item Abra seu navegador web
     \item Acesse:
-    \begin{lstlisting}[style=shell]
+\begin{lstlisting}[style=shell]
 http://localhost:9090/WebWolf
 \end{lstlisting}
 \end{enumerate}
@@ -111,8 +112,7 @@ Na página de Login do WebGoat em http://webgoat:8080/WebGoat no navegador do Za
     \item Preencha as informações com dados fictícios para criação de um usuário. (Exemplo: Username: \texttt{"fulano"} Senha: \texttt{"123456"})
     \item Clique em \texttt{"Sign up"}
     \item Dentro do ZAP, podemos encontrar o usuário e a senha em texto claro que criamos dentro dos pacotes no histórico de requisições.
-
-    \begin{lstlisting}[style=shell]
+\begin{lstlisting}[style=shell]
 http://webgoat:9090/WebWolf
 \end{lstlisting}
 \end{enumerate}
@@ -142,13 +142,13 @@ Se a aplicação aceita tokens com algoritmo "none" (sem assinatura), é possív
     \item Acesse: \texttt{(A7) Identity \& Auth Failure > JWT tokens > Exercício 6}
     \item No ZAP History, localize requisições para \texttt{/WebGoat/JWT/} e copie o token JWT do header \texttt{Authorization}
     \item No WebWolf (aba JWT), decodifique o token
-    \item Modifique o header para: 
-    \begin{lstlisting}[style=json]
+    \item Modifique o header para:
+\begin{lstlisting}[style=json]
 { "alg": "none" }
 \end{lstlisting}
 
     \item Modifique o payload para:
-    \begin{lstlisting}[style=json]
+\begin{lstlisting}[style=json]
 { "admin": "true"}
 \end{lstlisting}
     \item Gere o novo token (sem assinatura)
@@ -162,16 +162,16 @@ Injeção SQL é um ataque que explora vulnerabilidades em aplicações que inte
 \begin{enumerate}
     \item Dentro do WebGoat, vamos acessar \texttt{(A3) Injection > SQL Injection (intro) > Página 2}.
     \item Em \texttt{"SQL Query"}, vamos colocar o código abaixo:
-    \begin{lstlisting}[style=sql]
+\begin{lstlisting}[style=sql]
 SELECT department FROM employees WHERE userid=96134;
 \end{lstlisting}
     \item Clicar em \texttt{"Submit"}.
     \item Acessar o ZAP e procurar por uma requisição de método POST com Tags JSON e verificar se contém a nossa Query SQL.
     \item Após identificarmos, podemos clicar em \texttt{"Requester"} na parte superior direita do ZAP e selecionar o Method POST.
     \item Vamos colocar os mesmos dados do cabeçalho que o pacote com a query SQL que enviamos anteriormente pelo WebGoat.
-    \item Podemos clicar em \texttt{"Send"} e ver a resposta que o sistema nos fornece. 
+    \item Podemos clicar em \texttt{"Send"} e ver a resposta que o sistema nos fornece.
     \item Se estiver correto, podemos esperar uma resposta assim:
-    \begin{lstlisting}[style=json]
+\begin{lstlisting}[style=json]
 {
   "lessonCompleted" : true,
   "feedback" : "You have succeeded!",
@@ -184,7 +184,91 @@ SELECT department FROM employees WHERE userid=96134;
 \end{lstlisting}
 \end{enumerate}
 
-% ------------------------------------------------------------------------------------------------------------------------------------------
+\section{Falsificação de Cookie de Autenticação (Spoofing)}
+
+A falsificação de cookies de autenticação é uma técnica de ataque onde o invasor tenta burlar o mecanismo de autenticação manipulando cookies para se passar por outro usuário.
+
+\subsection{Objetivo}
+
+Após compreender claramente como o cookie de autenticação é gerado, tente falsificar o cookie e fazer login como \textbf{Tom}.
+
+\subsection{Credenciais conhecidas}
+
+\begin{center}
+\begin{tabular}{|l|l|}
+    \hline
+    \textbf{Nome de usuário} & \textbf{Senha} \\
+    \hline
+    webgoat                 & webgoat        \\
+    \hline
+    admin                   & admin          \\
+    \hline
+\end{tabular}
+\end{center}
+
+\subsection{Solução}
+
+\begin{enumerate}
+    \item Dentro do WebGoat, vamos acessar: \\
+        \texttt{(A1) Broken Access Control} $>$ \\
+        \texttt{Spoofing an Authentication Cookie} $>$ \\
+        \texttt{Página 2}.
+    \item Insira as credenciais de usuário conhecidas (webgoat/webgoat ou admin/admin).
+    \item Resultados que podem ser comparados: WebGoat e Admin possuem seus próprios cookies falsificados, mas conforme você continua fazendo login, notará que o cookie falsificado para cada login mantém seu valor.
+\begin{lstlisting}[style=shell]
+Cookie do Admin = NDM0MzZlNTI3MDQ2NGI3YTY3NTU2ZTY5NmQ2NDYx
+Cookie do WebGoat = NDM0MzZlNTI3MDQ2NGI3YTY3NTU3NDYxNmY2NzYyNjU3Nw==
+\end{lstlisting}
+    \item Qual é o esquema de codificação? Os cookies estão codificados em Base64. Use um decodificador Base64 (por exemplo: \url{https://www.base64decode.org/}).
+    \item Após decodificar os cookies de Base64 para UTF-8, você receberá os seguintes valores:
+\begin{lstlisting}[style=shell]
+Admin = 43436e5270464b7a67556e696d6461
+WebGoat = 43436e5270464b7a675574616f67626577
+\end{lstlisting}
+    \item UTF-8 codifica em valores HEX, ou seja, em 8 BITS. Podemos usar um conversor de HEX para Texto (por exemplo: \url{https://codebeautify.org/hex-string-converter}).
+\begin{lstlisting}[style=shell]
+Cookie falsificado do Admin em texto = CCnRpFKzgUnimda
+Cookie falsificado do WebGoat em texto = CCnRpFKzgUtaogbew
+\end{lstlisting}
+    \item Podemos observar as características dos valores de codificação: mantendo a primeira parte igual e escrevendo o nome de usuário ao contrário.
+        \begin{itemize}
+            \item \texttt{nimda} = \textbf{admin} (invertido)
+            \item \texttt{taogbew} = \textbf{webgoat} (invertido)
+        \end{itemize}
+    \item Agora vá para a seção de reversão de string no CodeBeautify para reverter a string:
+\begin{lstlisting}[style=shell]
+Admin = adminUgzKFpRnCC
+WebGoat = webgoatUgzKFpRnCC
+\end{lstlisting}
+    \item Agora substitua na string revertida \texttt{Admin} ou \texttt{WebGoat}  por \texttt{Tom}.
+\begin{lstlisting}[style=shell]
+TomUgzKFpRnCC
+\end{lstlisting}
+    \item Inverta novamente a string:
+\begin{lstlisting}[style=shell]
+CCnRpFKzgUmoT
+\end{lstlisting}
+    \item Em seguida, volte para a seção String para HEX no CodeBeautify e codifique a string acima.
+\begin{lstlisting}[style=shell]
+43436e5270464b7a67556d6f54
+\end{lstlisting}
+    \item Vá para o site Base64Encode e faça o encode da string em UTF-8.
+\begin{lstlisting}[style=shell]
+NDM0MzZlNTI3MDQ2NGI3YTY3NTU2ZDZmNTQ=
+\end{lstlisting}
+    \item Como autenticar o novo cookie de autenticação?
+        \begin{itemize}
+            \item Encontre a requisição POST correspondente
+            \item Encaminhe para o Manual Request Editor (ZAP)
+            \item Adicione após \texttt{Cookie:JSESSIONID} o cookie de autenticação falsificado
+\begin{lstlisting}[style=shell]
+spoof_auth=NDM0MzZlNTI3MDQ2NGI3YTY3NTU2ZDZmNTQ=
+\end{lstlisting}
+            \item Envie a requisição e você receberá uma mensagem de sucesso
+        \end{itemize}
+    \item Com a manipulação do cookie autenticado, agora podemos nos passar por outro usuário, neste caso \textbf{Tom}.
+\end{enumerate}
+
 \vspace*{\fill}
 \licenciamentoLivre
 
