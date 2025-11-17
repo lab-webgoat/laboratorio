@@ -280,6 +280,62 @@
     \end{itemize}
 \end{frame}
 
+% -----------------------Spoofing--------------------------%
+\begin{frame}{Spoofing de Cookie de Autenticação: Contexto}
+    \begin{itemize}
+        \item \textbf{Spoofing de Cookie de Autenticação}: Tipo de ataque de personificação que explora cookies de sessão mal implementados.
+        \item Ocorre quando um atacante obtém ou \textbf{falsifica um cookie de sessão válido} para se passar por outro usuário.
+        \item O atacante explora:
+        \begin{itemize}
+            \item Falhas na \textbf{criação/codificação} do cookie (ex: uso de algoritmos reversíveis ou previsíveis).
+            \item Falhas na \textbf{segurança da transmissão} (ex: ausência de HTTPS ou flags \texttt{Secure/HttpOnly}).
+            \item Falhas de \textbf{Validação} (ex: o servidor confia cegamente no valor do cookie sem checar a integridade).
+        \end{itemize}
+        \item Permite ao atacante \textbf{burlar o mecanismo de autenticação} e obter acesso não autorizado.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Análise e Impacto do Spoofing de Cookie}
+    \begin{enumerate}
+        \item \textbf{Análise da Previsibilidade do Cookie}
+        \begin{itemize}
+            \item Foco na descoberta do \textbf{algoritmo de geração} (ex: codificação previsível como Base64 ou concatenação simples).
+            \item O objetivo educacional é entender como a previsibilidade permite a \textbf{reversão e a falsificação} para um novo usuário.
+        \end{itemize}
+        
+        \item \textbf{Comprometimento da Confidencialidade e Integridade}
+        \begin{itemize}
+            \item Demonstração do potencial de \textbf{acesso total à conta} do usuário legítimo (\textit{personificação}).
+            \item Análise do impacto de \textbf{ações não autorizadas} (leitura de dados, modificação de configurações) realizadas pelo atacante.
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Mitigações para Spoofing de Cookie}
+    \begin{itemize}
+        \item \textbf{Tokens de Sessão Criptograficamente Seguros}
+        \begin{itemize}
+            \item Usar tokens de sessão longos, aleatórios e \textbf{criptograficamente fortes} (ex: UUIDs).
+        \end{itemize}
+
+        \item \textbf{Assinatura Digital dos Cookies}
+        \begin{itemize}
+            \item Utilizar HMAC (Hash-based Message Authentication Code) para \textbf{validar a integridade} do cookie no servidor, impedindo modificações.
+        \end{itemize}
+
+        \item \textbf{Uso de Flags de Cookie Seguras}
+        \begin{itemize}
+            \item \texttt{HttpOnly}: Previne acesso ao cookie via JavaScript (defesa contra XSS).
+            \item \texttt{Secure}: Garante que o cookie só seja enviado em conexões \textbf{HTTPS}.
+            \item \texttt{SameSite}: Ajuda a prevenir CSRF e vazamento de cookies entre sites.
+        \end{itemize}
+
+        \item \textbf{Vincular Sessão ao Endereço IP/User-Agent}
+        \begin{itemize}
+            \item Revalidar a sessão e expirar o cookie se houver uma \textbf{mudança drástica no contexto} do usuário.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
 
 % -------------------------------------------------%
 \section{Conclusão}
