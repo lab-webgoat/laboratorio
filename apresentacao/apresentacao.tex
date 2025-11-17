@@ -181,6 +181,9 @@
   \end{figure}
 \end{frame}
 
+% -----------------------JWT--------------------------%
+
+
 \begin{frame}{Vulnerabilidades JWT: Contexto}
     \begin{itemize}
         \item \textbf{JSON Web Token (JWT)}: padrão para autenticação e autorização em aplicações web modernas.
@@ -217,6 +220,68 @@
         \item \textbf{Decodificação}: não colocar dados sensíveis no payload (ou usar JWE para criptografar)
         \item \textbf{Manipulação}: sempre validar a assinatura e rejeitar tokens com algoritmos "none"
 
+    \end{itemize}
+\end{frame}
+
+% -----------------------SQL--------------------------%
+
+\begin{frame}{SQL Injection: Contexto}
+    \begin{itemize}
+        \item \textbf{SQL Injection (SQLi)}: ataque que explora falhas na validação de entradas que são usadas em consultas SQL.
+        \item Ocorre quando dados fornecidos pelo usuário são concatenados diretamente na query.
+        \item Permite que o atacante:
+        \begin{itemize}
+            \item Leia, modifique ou delete dados do banco
+            \item Bypasse autenticação
+            \item Execute comandos perigosos no banco de dados
+        \end{itemize}
+        \item Afeta aplicações sem sanitização adequada ou sem uso de queries preparadas.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Ataques que Demonstraremos}
+    \begin{enumerate}
+        \item \textbf{Bypass de Autenticação}
+        \begin{itemize}
+            \item Inserção de payloads como \texttt{' OR '1'='1}
+            \item Consequência: acesso não autorizado a contas
+        \end{itemize}
+        
+        \item \textbf{Extração de Dados}
+        \begin{itemize}
+            \item Exploração de consultas vulneráveis para listar tabelas e dados sensíveis
+            \item Demonstração do potencial de vazamento completo da base
+        \end{itemize}
+
+        \item \textbf{Manipulação/Exclusão de Dados}
+        \begin{itemize}
+            \item Uso de \texttt{UNION}, \texttt{UPDATE}, \texttt{DELETE} ou \texttt{DROP}
+            \item Consequência: corrupção total da base
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Mitigações para SQL Injection}
+    \begin{itemize}
+        \item \textbf{Uso de Prepared Statements (queries parametrizadas)}
+        \begin{itemize}
+            \item Evitam concatenação direta de dados na query
+        \end{itemize}
+
+        \item \textbf{Validação e Sanitização de Entrada}
+        \begin{itemize}
+            \item Rejeitar caracteres inesperados e validar formatos
+        \end{itemize}
+
+        \item \textbf{Princípio do Menor Privilégio}
+        \begin{itemize}
+            \item Contas do banco não devem ter permissões além do necessário
+        \end{itemize}
+
+        \item \textbf{ORMs e Query Builders seguros}
+        \begin{itemize}
+            \item Evitam a construção manual de consultas inseguras
+        \end{itemize}
     \end{itemize}
 \end{frame}
 
